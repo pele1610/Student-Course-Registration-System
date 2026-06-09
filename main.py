@@ -65,10 +65,10 @@ def main():
             system.view_courses_for_student(student_id)
 
         elif choice == "9":
-            print("\nSave feature coming soon.")
+            system.save_data()
 
         elif choice == "10":
-            print("\nLoad feature coming soon.")
+            system.load_data()
 
         elif choice == "0":
             print("\nGoodbye!")

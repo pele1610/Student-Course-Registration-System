@@ -1,3 +1,6 @@
+import json
+import os
+
 from models.student import Student
 from models.course import Course
 
@@ -6,6 +9,7 @@ class SchoolSystem:
         self.students = []
         self.courses = []
         self.registrations = []
+
 
     def add_student(self , student_id, name, email, phone_number,):
         for student in self.students:
@@ -16,8 +20,6 @@ class SchoolSystem:
         new_student = Student(student_id, name, email, phone_number)
         self.students.append(new_student)
         print(f"Student {name} added successfully.")
-
-
     
         
 
@@ -125,3 +127,56 @@ class SchoolSystem:
         for student in found_students:
             print(student.get_details())
             print()
+    
+
+    # FILE HANDLING
+
+
+    def save_data(self):
+    
+        students_data = []
+        for student in self.students:
+            students_data.append(student.to_dict())
+
+        
+        courses_data = []
+        for course in self.courses:
+            courses_data.append(course.to_dict())
+
+        with open("data/students.json", "w") as f:
+            json.dump(students_data, f, indent=4)
+
+        with open("data/courses.json", "w") as f:
+            json.dump(courses_data, f, indent=4)
+
+        with open("data/registrations.json", "w") as f:
+            json.dump(self.registrations, f, indent=4)
+
+        print("\nData saved successfully.")
+
+    def load_data(self):
+    
+        if os.path.exists("data/students.json"):
+            with open("data/students.json", "r") as f:
+                students_data = json.load(f)
+                for s in students_data:
+                    student = Student(s["student_id"], s["name"], s["email"], s["phone_number"])
+                    self.students.append(student)
+
+        
+        if os.path.exists("data/courses.json"):
+            with open("data/courses.json", "r") as f:
+                courses_data = json.load(f)
+                for c in courses_data:
+                    course = Course(c["course_id"], c["course_name"], c["trainer_name"], c["capacity"])
+                    self.courses.append(course)
+
+        
+        if os.path.exists("data/registrations.json"):
+            with open("data/registrations.json", "r") as f:
+                self.registrations = json.load(f)
+
+        print("\nData loaded successfully.")
+
+
+
