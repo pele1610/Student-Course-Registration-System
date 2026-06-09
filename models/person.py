@@ -3,4 +3,11 @@ class Person:
         self.name = name
         self.email = email
         self.phone_number = phone_number
-        pass
+        
+
+    def get_details(self):
+        return  (
+            f"Name         : {self.name}\n"
+            f"Email        : {self.email}\n"
+            f"Phone Number : {self.phone_number}"
+        )
